@@ -1,0 +1,41 @@
+#############################################
+#####Install ROS Kinetic in Ubuntu 16.04#####
+#############################################
+#1.安装
+  1.1 配置Ubuntu软件仓库
+  1.2 设置sources.list
+      设置电脑椅安装来自packages.ros.org的软件。
+        $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+      如果下载速度缓慢，推荐选择一个镜像源替换命令。例如，清华源：
+        $ sudo sh -c '. /etc/lsb-release && echo "deb http://mirrors.tuna.tsinghua.edu.cn/ros/ubuntu/ `lsb_release -cs` main" > /etc/apt/sources.list.d/ros-latest.list'
+  1.3 设置密钥
+        $ sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+  1.4 安装
+      首先，确保你的Debian软件包索引是最新的：  
+        $ sudo apt-get update
+       桌面完整版：（推荐）：包含ROS、rqt、rviz、机器人通用库、2D/3D模拟器、导航以及2D/3D感知。
+        $ sudo apt-get install ros-kinetic-desktop-full #如果你是别的版，替换kinetic
+       桌面版安装: 包含ROS、rqt、rviz以及通用机器人函数库。
+        $ sudo apt-get install ros-kinetic-desktop
+       基础版安装: (简版) 包含ROS核心软件包、构建工具以及通信相关的程序库，无GUI工具。
+        $ sudo apt-get install ros-kinetic-ros-base
+   1.5 初始化rosdep
+       在开始使用ROS之前你还需要初始化rosdep。rosdep可以方便在你需要编译某些源码的时候为其安装一些系统依赖，同时也是某些ROS核心功能组件所必需用到的工具。
+        $ sudo rosdep init
+        $ rosdep update
+   1.6 环境配置
+       如果每次打开一个新的终端时ROS环境变量都能够自动配置好（即添加到bash会话中），那将会方便很多：
+        $ echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
+        $ source ~/.bashrc
+       如果你安装有多个ROS版本, ~/.bashrc 必须只能 source 你当前使用版本所对应的 setup.bash。
+       如果你只想改变当前终端下的环境变量，可以执行以下命令：
+        $ source /opt/ros/kinetic/setup.bash
+       如果你使用 zsh，替换其中的 bash， 你可以用以下命令来设置你的shell:
+        $ echo "source /opt/ros/kinetic/setup.zsh" >> ~/.zshrc
+        $ source ~/.zshrc
+   1.7 构建工厂依赖
+        到目前为止，你已经安装了运行核心 ROS 包所需的内容。为了创建和管理自己的 ROS 工作区，有各种各样的工具和需求分别分布。例如：rosinstall 是一个经常使用的命令行工具，它使你能够轻松地从一个命令下载许多 ROS 包的源树。
+        要安装这个工具和其他构建ROS包的依赖项，请运行:
+        $ sudo apt-get install python-rosinstall python-rosinstall-generator python-wstool build-essential
+  
+tips: http://wiki.ros.org/kinetic/Installation/Ubuntu#Ubuntu_install_of_ROS_Kinetic
